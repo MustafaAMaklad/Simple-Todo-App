@@ -1,6 +1,7 @@
 # Simple Todo App
 
-## I created this simple application using to practice my skills in backend development.
+### I created this simple application using to practice my skills in backend development.
+
 ## Technologies used:
 ### - PHP
 ### - Mysql
