@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-// namespace App\Database;
+namespace App\Database;
+use mysqli;
 // use App\Databasea\DBQuery;
 class DBConnector {
   private static ?DBConnector $instance = null;
