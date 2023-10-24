@@ -1,9 +1,10 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
 use App\Services\SessionService;
 use App\Services\TodoService;
+
 
 
 require_once('../../vendor/autoload.php');
@@ -12,8 +13,12 @@ $currentUserId = SessionService::getCurrentUserId();
 
 $todoService = new TodoService($currentUserId);
 
-$todoTitle = $_POST['titleField'];
-$todoDescription = $_POST['descriptionField'];
+$newTodoTitle = 
+$_POST['editTitleField'];
+'workeeasfa324235';
+$oldTodoTitle = 
+$_POST['oldTitleField'];
+'working';
 
 
-$todoService->createTodo($todoTitle, $todoDescription);
+$todoService->updateTodoTitle($newTodoTitle, $oldTodoTitle);

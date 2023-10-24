@@ -12,8 +12,9 @@ $currentUserId = SessionService::getCurrentUserId();
 
 $todoService = new TodoService($currentUserId);
 
-$todoTitle = $_POST['titleField'];
-$todoDescription = $_POST['descriptionField'];
+$todoTitleSearch = 
+$_POST['todoTitleSearch'];
 
 
-$todoService->createTodo($todoTitle, $todoDescription);
+
+$todoService->searchTodos($todoTitleSearch);

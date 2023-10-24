@@ -48,11 +48,13 @@ class FormValidator {
       });
       if (correctness == (context.fields).length) {
         const form = document.getElementById('signUpForm');
+        const profileImage = document.getElementsByName('profileImage')[0];
         const prePayload = new FormData(form);
+        prePayload.delete('profileImage');
+        prePayload.append('profileImage', profileImage.files[0])
         const payload = new URLSearchParams(prePayload);
         console.log(...payload);
-        this.signUpRequest(payload);
-
+        this.signUpRequest(prePayload);
       }
     }
     );
@@ -69,7 +71,7 @@ class FormValidator {
         data => {
           console.log(data)
           if (data.status == false) {
-
+            console.log(data);
             if (data.error.available == false) {
               document.getElementById('email-error').innerHTML = data.error.errorMsg;
             }
@@ -218,17 +220,17 @@ class FormValidator {
       return true;
     }
   }
-  validateUploadedFile(field) {
-    // const uploadedFile = this.form.querySelector('#profileImage');
-    const file = field.files[0];
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  // validateUploadedFile() {
+  //   const uploadedFile = this.form.querySelector('#profileImage');
+  //   const file = uploadedFile.files[0];
+  //   const allowedTypes = ["jpg","png"];
 
-    if (allowedMimeTypes.includes(file.type)) {
-      this.setStatus(field, null, "success");
-    } else {
-      this.setStatus(field, "Only images are allowed", "error");
-    }
-  }
+  //   if (allowedMimeTypes.includes(file.type)) {
+  //     this.setStatus(field, null, "success");
+  //   } else {
+  //     this.setStatus(field, "Only images are allowed", "error");
+  //   }
+  // }
 
 }
 

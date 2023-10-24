@@ -11,32 +11,34 @@ use App\Auth\Auth;
 
 $auth = new Auth();
 
-$name = 
-$_POST['name'];
+$name =
+  $_POST['name'];
 
 
-$email = 
-$_POST['email'];
+$email =
+  $_POST['email'];
 
 
-$password = 
-$_POST['password'];
+$password =
+  $_POST['password'];
 
 
-$passwordConfirm = 
-$_POST['passwordconfirm'];
+$passwordConfirm =
+  $_POST['passwordconfirm'];
 
+if (isset($_FILES['profileImage'])) {
+  $profileImg = $_FILES['profileImage'];
+} else {
+  $profileImg = null;
+}
 
-
-
-
-$response = $auth->signUp($name, $email, $password, $passwordConfirm);
+$response = $auth->signUp($name, $email, $password, $passwordConfirm, $profileImg);
 
 if ($response['status'] == true) {
   header("Content-Type: application/json");
   echo json_encode(
     [
-      'status' => true, 
+      'status' => true,
       'directToUrl' => 'http://localhost/todoapp/public/views/auth/signUpSuccess.html'
     ]
   );

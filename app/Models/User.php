@@ -28,13 +28,13 @@ class User extends Model{
     return $assoc;
   }
 
-  public function create(string $name, string $email, string $password) :bool{
-    $query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
+  public function create(string $name, string $email, string $password, string $imagePath) :bool{
+    $query = 'INSERT INTO users (name, email, password, profile_img) VALUES (?, ?, ?, ?)';
     $stmt = $this->db->prepare($query);
     // check for execution prepration
     if ($stmt) {
       $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-      $stmt->bind_param("sss", $name, $email, $hashedPassword); // Bind password to statement parameter
+      $stmt->bind_param("ssss", $name, $email, $hashedPassword, $imagePath); // Bind password to statement parameter
       if ($stmt->execute()) {
         $stmt->close();
         return true;
