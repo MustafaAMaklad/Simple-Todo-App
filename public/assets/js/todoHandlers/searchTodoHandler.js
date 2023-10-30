@@ -46,11 +46,11 @@ function search() {
         const descriptionSpan = document.createElement('span');
 
         // Content
-        checkButton.id = 'check-' + data[property].title;
-        editButton.id = 'edit-' + data[property].title;
-        deleteButton.id = 'delete-' + data[property].title;
-        titleSpan.id = 'title-' + data[property].title;
-        descriptionSpan.id = 'description-' + data[property].title;
+        checkButton.id = 'check-' + data[property].title + '-' + data[property].id;
+        editButton.id = 'edit-' + data[property].title + '-' + data[property].id;
+        deleteButton.id = 'delete-' + data[property].title + '-' + data[property].id;
+        titleSpan.id = 'title-' + data[property].title + '-' + data[property].id;
+        descriptionSpan.id = 'description-' + data[property].title + '-' + data[property].id;
 
         // Values
         titleSpan.innerHTML = (data[property].title).trim();

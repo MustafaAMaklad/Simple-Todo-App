@@ -34,7 +34,7 @@ $_POST['passwordconfirm'];
 
 
 
-$response = $auth->signUp($name, $email, $password, $passwordConfirm);
+$response = $auth->signUp($name, $email, $password, $passwordConfirm, null);
 
 if ($response['status'] == true) {
   header("Content-Type: application/json");

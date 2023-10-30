@@ -6,16 +6,17 @@ namespace App\Auth;
 
 
 use App\Models\User;
+use App\Models\Admin;
 use App\Services\StoreFilesService;
 use App\Utils\Validator;
 
 class Auth
 {
-  protected  $userModel;
+  protected  User|Admin $userModel;
 
   protected Validator $validator;
 
-  private array $response = [
+  protected array $response = [
     'status' => null,
   ];
 

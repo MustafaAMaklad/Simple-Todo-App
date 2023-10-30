@@ -2,7 +2,8 @@ function deleteTodo() {
   document.addEventListener('click', function (event) {
     deleteBtnId = event.target.id;
     if ((deleteBtnId).startsWith('delete-')) {
-      todoTitle = deleteBtnId.replace('delete-', '');
+      const todoContent = deleteBtnId.split('-');
+      const todoId = todoContent[todoContent.length - 1];
 
       fetch('http://localhost/todoapp/app/Services/deleteTodo.php', {
         method: 'POST',
@@ -10,7 +11,7 @@ function deleteTodo() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          title: todoTitle
+          id: todoId
         })
       })
         .then(response =>
@@ -20,7 +21,7 @@ function deleteTodo() {
           console.log(data);
           if (data.status == true) {
             // const tableBody = document.querySelector('#todosTable');
-            deleteTableRow('row-' + todoTitle);
+            deleteTableRow('row-' + todoId);
           } else {
             console.log('problem occured');
           }

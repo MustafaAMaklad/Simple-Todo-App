@@ -44,8 +44,8 @@ class TodoService
     }
 
     // Process update todo status
-    $todoTitle = $data['title'];
-    if ($this->todoModel->updateStatus($todoTitle, $this->userId)) {
+    $todoId = (int) $data['id'];
+    if ($this->todoModel->updateStatus($todoId)) {
       header("Content-Type: application/json");
       echo json_encode(["status" => true]);
       exit;
@@ -102,8 +102,8 @@ class TodoService
     }
 
     // Process update todo status
-    $todoTitle = $data['title'];
-    if ($this->todoModel->delete($todoTitle, $this->userId)) {
+    $todoId = (int) $data['id'];
+    if ($this->todoModel->delete($todoId)) {
       header("Content-Type: application/json");
       echo json_encode(["status" => true]);
       exit;
@@ -114,11 +114,11 @@ class TodoService
     }
   }
 
-  public function updateTodoTitle(string $newTitle, string $oldTitle)
+  public function updateTodoTitle(string $newTitle, int $todoId)
   {
     $todoTitleCount = $this->todoModel->getCount($newTitle, $this->userId);
     if ($todoTitleCount == 0) {
-      if ($this->todoModel->updateTitle($newTitle, $oldTitle, $this->userId)) {
+      if ($this->todoModel->updateTitle($newTitle, $todoId)) {
         header("Content-Type: application/json");
         echo json_encode(["status" => true]);
         exit;

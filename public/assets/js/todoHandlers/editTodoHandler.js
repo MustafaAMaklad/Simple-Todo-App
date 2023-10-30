@@ -7,10 +7,12 @@ function openEditModal(callback) {
     editBtnId = event.target.id;
     if ((editBtnId).startsWith('edit-')) {
       // display the todo title inside input field
-      const todoTitle = editBtnId.replace('edit-', '');
+      const todoContent = editBtnId.split('-');
+      const todoTitle = todoContent.slice(1, (todoContent.length - 1)).join(' ');
+      const todoId = todoContent[todoContent.length - 1];
       document.getElementById('editTitleField').value = todoTitle;
 
-      callback(todoTitle);
+      callback(todoId);
       // open modal
       toggleMoal('editTodoModal');
     }
@@ -56,7 +58,7 @@ function sendEditTodoRequest(payload) {
     );
 }
 
-function submitEditRequest(todoForm, titleField, oldTitle) {
+function submitEditRequest(todoForm, titleField, todoId) {
 
   titleField.addEventListener('input', () => {
     if (titleField.value.trim() == '') {
@@ -77,7 +79,7 @@ function submitEditRequest(todoForm, titleField, oldTitle) {
     if (correctness == 1) {
       const form = document.getElementById('editTodoForm');
       const prePayload = new FormData(form);
-      prePayload.append('oldTitleField', oldTitle);
+      prePayload.append('todoId', todoId);
       const payload = new URLSearchParams(prePayload);
       console.log(...payload);
       sendEditTodoRequest(payload);
@@ -92,12 +94,12 @@ function submitEditRequest(todoForm, titleField, oldTitle) {
 
 
 
-openEditModal(function (todoTitle) {
+openEditModal(function (todoId) {
   const editTitleField = document.getElementById('editTitleField');
 
   const editTodoForm = document.getElementById('editTodoForm');
 
-  submitEditRequest(editTodoForm, editTitleField, todoTitle);
+  submitEditRequest(editTodoForm, editTitleField, todoId);
 
 
 });

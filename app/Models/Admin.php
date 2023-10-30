@@ -64,7 +64,7 @@ class Admin extends Model
   public function SelectAllUsersTodos() : array
   {
     $query = 'SELECT name, email, title FROM todos
-    RIGHT JOIN users ON todos.user_id=users.id;';
+    INNER JOIN users ON todos.user_id=users.id;';
     $result = $this->db->query($query);
     $users = [];
     while ($user = $result->fetch_assoc()) {

@@ -23,14 +23,14 @@ class Todo extends Model
     }
     return false;
   }
-  public function select(string $title, int $userId, string $parameter = '*'): ?array
+  public function select(int $todoId, string $parameter = '*'): ?array
   {
     $query = "SELECT $parameter FROM todos
-    WHERE title = ? AND user_id = ?";
+    WHERE id = ?";
     $stmt = $this->db->prepare($query);
 
     if ($stmt) {
-      $stmt->bind_param('si', $title, $userId);
+      $stmt->bind_param('i', $todoId);
 
       if ($stmt->execute()) {
         $result = $stmt->get_result();
@@ -79,24 +79,24 @@ class Todo extends Model
     $row = $stmt->get_result()->fetch_assoc();
     return $row['count'];
   }
-  public function updateStatus(string $title, int $userId): bool
+  public function updateStatus(int $todoId): bool
   {
     $query = 'UPDATE todos
     SET status = ?
-    WHERE title = ? AND user_id = ?';
+    WHERE id = ?';
 
     $check = 1;
     $unceck = 0;
 
     $stmt = $this->db->prepare($query);
-    $todoStatus = $this->select($title, $userId, 'status');
+    $todoStatus = $this->select($todoId, 'status');
     if ($todoStatus) {
       if ($todoStatus['status'] == 0) {
-        $stmt->bind_param('isi', $check, $title, $userId);
+        $stmt->bind_param('ii', $check, $todoId);
         $stmt->execute();
         $stmt->close();
       } else {
-        $stmt->bind_param('isi', $unceck, $title, $userId);
+        $stmt->bind_param('ii', $unceck, $todoId);
         $stmt->execute();
         $stmt->close();
       }
@@ -113,14 +113,14 @@ class Todo extends Model
    * Update
    */
 
-  public function updateTitle(string $newTitle, string $oldTitle, int $userId): bool
+  public function updateTitle(string $newTitle, int $todoId): bool
   {
     $query = 'UPDATE todos
     SET title = ?
-    WHERE title = ? AND user_id = ?';
+    WHERE id = ?';
 
     $stmt = $this->db->prepare($query);
-    $stmt->bind_param('ssi', $newTitle, $oldTitle, $userId);
+    $stmt->bind_param('si', $newTitle, $todoId);
 
     if ($stmt->execute()) {
       $stmt->close();
@@ -130,14 +130,14 @@ class Todo extends Model
       return false;
     }
   }
-  public function updateDescription(string $newDescription, string $oldDescription, int $userId): bool
+  public function updateDescription(string $newDescription, int $todoId): bool
   {
     $query = 'UPDATE todos
     SET description = ?
-    WHERE title = ? AND user_id = ?';
+    WHERE id = ?';
 
     $stmt = $this->db->prepare($query);
-    $stmt->bind_param('ssi', $newDescription, $oldDescription, $userId);
+    $stmt->bind_param('si', $newDescription, $todoId);
     if ($stmt->execute()) {
       $stmt->close();
       return true;
@@ -158,27 +158,6 @@ class Todo extends Model
     return $todos;
   }
 
-  public function sortDesc(int $userId): array
-  {
-    $query = 'SELECT * FROM todos
-      WHERE user_id = ?
-      ORDER BY created_at DESC';
-
-    $todos = [];
-
-    $stmt = $this->db->prepare($query);
-    $stmt->bind_param('i', $userId);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-      while ($todo = $result->fetch_assoc()) {
-        $todos[] = $todo;
-      }
-    }
-    return $todos;
-  }
   public function sortAsc(int $userId): array
   {
     $query = 'SELECT * FROM todos
@@ -220,13 +199,13 @@ class Todo extends Model
     }
     return $todos;
   }
-  public function delete(string $title, int $userId): bool
+  public function delete(int $todoId): bool
   {
     $query = 'DELETE FROM todos
-    WHERE title = ? AND user_id = ?';
+    WHERE id = ?';
 
     $stmt = $this->db->prepare($query);
-    $stmt->bind_param('si', $title, $userId);
+    $stmt->bind_param('i', $todoId);
     if ($stmt->execute()) {
       $stmt->close();
       return true;

@@ -16,9 +16,9 @@ $todoService = new TodoService($currentUserId);
 $newTodoTitle = 
 $_POST['editTitleField'];
 'workeeasfa324235';
-$oldTodoTitle = 
-$_POST['oldTitleField'];
+$todoId = 
+(int) $_POST['todoId'];
 'working';
 
 
-$todoService->updateTodoTitle($newTodoTitle, $oldTodoTitle);
+$todoService->updateTodoTitle($newTodoTitle, $todoId);
